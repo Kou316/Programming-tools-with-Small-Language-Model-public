@@ -1,25 +1,16 @@
-// ベースイメージをubuntuに設定
 FROM ubuntu:22.04
 
-// 作業ディレクトリを/appに設定
 WORKDIR /app
 
-// Python, pip, docker.ioをインストール
-// 終了後にキャッシュを削除
 RUN apt-get update && apt-get install -y \
-  python3 python3-pip \
-  docker.io \
-  && apt-get clean \
-  && rm -rf /var/lib/apt/lists/*
+    python3 python3-pip \
+    docker.io \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
-// requirements.txt内のPython依存関係をコピー（インストール）
-COPY requirements.txt
-
-// コンテナ内にプロジェクト全体をコピー
+COPY requirements.txt .
 RUN pip3 install --no-cache-dir -r requirements.txt
 
-// 起動コマンド
-// CMDをuvicornで起動
 COPY . .
 
-CMD ["python3", "-m", "uvicorn", "main:app", "--host", "127.0.0.1", "--port, "8000"]
+CMD ["python3", "-m", "uvicorn", "main:app", "--host", "127.0.0.1", "--port", "8000"]
