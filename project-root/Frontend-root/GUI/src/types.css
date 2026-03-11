@@ -1,0 +1,33 @@
+export type Language = "python" | "c" | "cpp" | "java";
+export type GradeResult = "Pending" | "Correct" | "Wrong" | "Error";
+
+export interface ScbTestcase { input: string; output: string }
+export interface GradeDetail {
+	input: string;
+	expected: string;
+	stdout: string;
+	stderr: string;
+	passed: boolean;
+}
+export interface DifficultyStats { correct: number; total: number }
+export type Stats = Record<string, DifficultyStats>;
+
+export interface ProblemRecord {
+	id: string;
+	topic: string;
+	difficulty: number;
+	problem_text: string;
+	input_spec?: string;
+	output_spec?: string;
+	example_input?: string;
+	example_output?: string;
+	source?: string;
+}
+
+export interface WrongEntry {
+	key: string;
+	problemId: string;
+	problemText: string;
+	topic: string;
+	difficulty: number;
+}
